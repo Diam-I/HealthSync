@@ -1,0 +1,48 @@
+@startuml
+
+class Note {
+  id
+  titre
+  contenu
+  date
+  
+}
+
+class Document {
+  id
+  titre
+  chemin_fichier
+  type
+  date
+  medecin_id
+  notes
+}
+
+class Medecin {
+  id
+  nom
+  specialite
+  adresse
+  telephone
+}
+
+class RendezVous {
+  id
+  date
+  heure
+  lieu
+  medecin_id
+  type
+  note
+
+}
+
+class UserSecurity {
+  mot_de_passe_hash
+  cle_AES
+}
+
+Medecin "1" -- "0..*" Document
+Medecin "1" -- "0..*" RendezVous
+
+@enduml

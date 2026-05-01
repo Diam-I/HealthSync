@@ -1,0 +1,25 @@
+@startuml
+actor Utilisateur
+participant "App Flutter" as App
+participant "local_auth" as Auth
+participant "Secure Storage" as Storage
+participant "Chiffrement AES" as AES
+participant "Base de données (Hive)" as DB
+
+Utilisateur -> App : Ouvrir application
+App -> Auth : Demander biométrie
+
+alt Échec
+    Auth --> App : Refus
+    App --> Utilisateur : Accès refusé
+else Succès
+    Auth --> App : OK
+    App -> Storage : Récupérer clé AES
+    Storage --> App : Clé
+    App -> AES : Déchiffrer données
+    AES -> DB : Lire données chiffrées
+    DB --> AES : Données
+    AES --> App : Données déchiffrées
+    App --> Utilisateur : Accès autorisé
+end
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+actor Utilisateur
+participant "App Flutter" as App
+participant "File Picker" as Picker
+participant "Chiffrement AES" as AES
+participant "Système de fichiers" as FS
+participant "Base de données (Hive)" as DB
+
+Utilisateur -> App : Ajouter document
+App -> Picker : Ouvrir sélecteur
+Picker --> App : Fichier sélectionné
+
+App -> AES : Chiffrer fichier
+AES --> App : Fichier chiffré
+
+App -> FS : Sauvegarder fichier
+FS --> App : OK
+
+App -> DB : Enregistrer métadonnées
+DB --> App : OK
+
+App --> Utilisateur : Document ajouté
+@enduml

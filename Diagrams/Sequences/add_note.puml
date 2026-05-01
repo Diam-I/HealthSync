@@ -1,0 +1,19 @@
+@startuml
+actor Utilisateur
+participant "App Flutter" as App
+participant "Secure Storage" as Storage
+participant "Chiffrement AES" as AES
+participant "Base de données (Hive)" as DB
+
+Utilisateur -> App : Saisir note
+App -> Storage : Récupérer clé AES
+Storage --> App : Clé
+
+App -> AES : Chiffrer note
+AES --> App : Note chiffrée
+
+App -> DB : Stocker note chiffrée
+DB --> App : Confirmation
+
+App --> Utilisateur : Note enregistrée
+@enduml

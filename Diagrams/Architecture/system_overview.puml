@@ -1,0 +1,32 @@
+@startuml
+!theme plain
+skinparam componentStyle uml2
+
+actor "Utilisateur" as user
+
+package "Application Flutter" {
+    component "Interface Utilisateur (UI)" as UI
+    component "Logique Métier" as Logic
+}
+
+package "Couche Sécurité" {
+    component "local_auth (Biométrie)" as Auth
+    storage "Stockage Sécurisé (Clés)" as SS
+    component "Chiffrement AES" as Crypto
+}
+
+package "Stockage des Données" {
+    database "Base de données Hive" as Hive
+    component "Fichiers Locaux" as Files
+}
+
+user --> UI : Interagit avec
+UI --> Logic : Envoie les actions
+
+Logic --> Auth : Vérifie l'identité
+Logic --> SS : Récupère la clé de chiffrement
+Logic --> Crypto : Chiffre/Déchiffre les données
+
+Crypto --> Hive : Sauvegarde les données
+Crypto --> Files : Stocke les documents
+@enduml
