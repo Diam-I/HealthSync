@@ -2,9 +2,9 @@ name: Flutter CI/CD
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main","develop"]
   pull_request:
-    branches: ["main"]
+    branches: ["main","develop"]
 
 jobs:
   build:
@@ -19,10 +19,22 @@ jobs:
         with:
           channel: 'stable'
 
-      - run: flutter pub get
+      - name: Recuperer les dépendances
+        run: flutter pub get
 
-      - run: flutter analyze
+      - name: Analyser le code
+        run: flutter analyze
 
-      - run: flutter test
+      - name: Executer les tests
+        run: flutter test
 
-      - run: flutter build apk --release
+      - name: Construire l'APK
+        run: flutter build apk --release
+        
+      - name: Sauvegarder l'APK 
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: healthsync/build/app/outputs/flutter-apk/app-release.apk
+
+      

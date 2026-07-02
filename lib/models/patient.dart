@@ -1,0 +1,56 @@
+class Patient {
+  final String id;
+  final String firstName;
+  final String lastName;
+  final String phone;
+  final String email;
+  final String address;
+  final String gender;
+  final String dateOfBirth;
+  final int height;
+  final int weight;
+  final String bloodType;
+
+  Patient({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.phone,
+    required this.email,
+    required this.address,
+    required this.gender,
+    required this.dateOfBirth,
+    required this.height,
+    required this.weight,
+    required this.bloodType,
+  });
+
+  // Convert JSON to Patient object //
+  Patient.fromJson(Map<String, dynamic> json)
+    : id = json['id'],
+      firstName = json['firstName'],
+      lastName = json['lastName'],
+      phone = json['phone'],
+      email = json['email'],
+      address = json['address'],
+      gender = json['gender'],
+      dateOfBirth = json['dateOfBirth'],
+      height = json['height'],
+      weight = json['weight'],
+      bloodType = json['bloodType'];
+
+  // Convert Patient object to JSON //
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'firstName': firstName,
+    'lastName': lastName,
+    'phone': phone,
+    'email': email,
+    'address': address,
+    'gender': gender,
+    'dateOfBirth': dateOfBirth,
+    'height': height,
+    'weight': weight,
+    'bloodType': bloodType,
+  };
+}
