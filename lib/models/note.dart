@@ -1,4 +1,4 @@
-import 'package:healthsync/enums/noteCaregory.dart';
+import 'package:healthsync/enums/noteCategory.dart';
 
 class Note {
   final String id;
@@ -40,6 +40,14 @@ class Note {
 
   // Convert JSON to Note object //
   factory Note.fromJson(Map<String, dynamic> json) {
+    if (json['id'] == null || json['id'] == '' || 
+        json['title'] == null || json['title'] == '' ||
+        json['content'] == null || json['content'] == '' ||
+        json['createdAt'] == null || json['createdAt'] == '' ||
+        json['updatedAt'] == null || json['updatedAt'] == '' ||
+        json['category'] == null || json['category'] == '') {
+      throw ArgumentError('Missing required fields in JSON');
+    }
     return Note(
       id: json['id'],
       title: json['title'],

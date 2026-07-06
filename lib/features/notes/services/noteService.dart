@@ -8,8 +8,8 @@ class NoteService {
 
   NoteService({required this.encryptionService, required this.storage});
 
+  // Add note securely using encryption and storage //
   Future<void> addNote(Note note) async {
-    // Add note securely using encryption and storage //
     if (note.title.isEmpty) {
       throw Exception('Note title cannot be empty');
     }
@@ -19,18 +19,12 @@ class NoteService {
   }
 
   Future<Note?> getNote(int id) async {
-    // Implement logic to retrieve the note securely
     return null;
   }
 
-  Future<void> deleteNote(int id) async {
-    // Implement logic to delete the note securely
-  }
-  Future<void> updateNote(Note note) async {
-    // Implement logic to update the note securely
-  }
+  Future<void> deleteNote(int id) async {}
+  Future<void> updateNote(Note note) async {}
   Future<List<Note>> getAllNotes() async {
-    // Implement logic to retrieve all notes securely
     return [];
   }
 }

@@ -10,8 +10,8 @@ class EncryptionService {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
   final LocalAuthentication _auth = LocalAuthentication();
 
+  // Generate a new AES key and store it securely if it doesn't exist, otherwise retrieve the existing key //
   Future<Uint8List> generateAESKey() async {
-    // Check if the key already exists in secure storage //
     String? key64 = await _storage.read(key: _keyName);
 
     if (key64 != null) {
@@ -28,14 +28,14 @@ class EncryptionService {
     return newKey.bytes;
   }
 
+  // Retrieve the AES key from secure storage and return it as an encrypt.Key object //
   Future<encrypt.Key> _getKey() async {
-    // Retrieve the AES key from secure storage or generate a new one if it doesn't exist //
     final keyBytes = await generateAESKey();
     return encrypt.Key(keyBytes);
   }
 
+  // Authenticate the user using biometrics before allowing access to sensitive data //
   Future<bool> authenticate() async {
-    // Check if the device supports biometric authentication and if the user has enrolled biometrics //
     try {
       final canAuthenticate =
           await _auth.canCheckBiometrics || await _auth.isDeviceSupported();
@@ -53,6 +53,7 @@ class EncryptionService {
     }
   }
 
+  // Encrypt the input text using AES encryption and return the encrypted data as a base64 string //
   Future<String> encryptData(String plainText) async {
     // Check if the input text is empty //
     if (plainText.trim().isEmpty) {
@@ -73,8 +74,8 @@ class EncryptionService {
     }
   }
 
+  // Decrypt the input encrypted text using AES decryption and return the original plain text //
   Future<String> decryptData(String encryptedText) async {
-    // added check for empty encrypted text //
     if (encryptedText.trim().isEmpty) {
       throw Exception('Le texte chiffré est vide.');
     }
