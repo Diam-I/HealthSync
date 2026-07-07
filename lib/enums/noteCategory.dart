@@ -2,7 +2,7 @@ enum NoteCategory {
   Consultation,
   Symptome,
   Traitement,
-  Medical,
+  Maladie,
   Personnel,
   Autre,
 }

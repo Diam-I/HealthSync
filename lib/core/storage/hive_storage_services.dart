@@ -1,3 +1,4 @@
+import 'package:healthsync/models/note.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:typed_data';
 
@@ -23,6 +24,7 @@ class HiveStorageServices<T> {
     // Retrieve data from the Hive box //
     return _box.get(key);
   }
+
   Future<void> deleteData(dynamic key) async {
     // Delete data from the Hive box //
     await _box.delete(key);
@@ -38,4 +40,9 @@ class HiveStorageServices<T> {
     await _box.close();
   }
 
+  Future<List<T>> getAllData() async {
+    return _box.values.toList();
+  }
+
+  bool get isOpen => _box.isOpen;
 }
