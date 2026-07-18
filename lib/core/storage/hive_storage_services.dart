@@ -1,4 +1,3 @@
-import 'package:healthsync/models/note.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:typed_data';
 

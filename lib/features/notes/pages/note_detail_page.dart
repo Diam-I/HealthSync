@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:healthsync/enums/noteCategory.dart';
+import 'package:healthsync/enums/note_category.dart';
 import 'package:healthsync/models/note.dart';
 
 class NoteDetailPage extends StatefulWidget {
@@ -40,7 +40,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
 
     _selectedDate = widget.note?.updatedAt ?? DateTime.now();
     _selectedCategory =
-        widget.note?.category ?? NoteCategory.Personnel;
+        widget.note?.category ?? NoteCategory.personnel;
   }
 
   @override

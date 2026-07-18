@@ -1,7 +1,7 @@
 import 'package:healthsync/core/security/encryption_service.dart';
 import 'package:healthsync/core/storage/hive_storage_services.dart';
 import 'package:healthsync/models/note.dart';
-import 'package:healthsync/enums/noteCategory.dart';
+import 'package:healthsync/enums/note_category.dart';
 
 class NoteService {
   final EncryptionService encryptionService;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:healthsync/enums/noteCategory.dart';
+import 'package:healthsync/enums/note_category.dart';
 import 'package:healthsync/models/note.dart';
 import 'package:healthsync/features/notes/pages/note_detail_page.dart';
 
@@ -21,7 +21,7 @@ class _NotesPageState extends State<NotesPage> {
       content: 'Douleur ressentie après le sport.',
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
-      category: NoteCategory.Symptome,
+      category: NoteCategory.symptome,
       tags: const ['cardio'],
     ),
     Note(
@@ -30,7 +30,7 @@ class _NotesPageState extends State<NotesPage> {
       content: 'Le médecin recommande un ECG.',
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
-      category: NoteCategory.Consultation,
+      category: NoteCategory.consultation,
     ),
   ];
 

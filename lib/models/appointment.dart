@@ -1,4 +1,4 @@
-import 'package:healthsync/models/Doctor.dart';
+import 'package:healthsync/models/doctor.dart';
 
 class Appointment {
   final String id;
