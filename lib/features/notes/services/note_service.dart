@@ -31,7 +31,7 @@ class NoteService {
       throw ArgumentError('Note content cannot be empty');
     }
 
-    final existing = storage.getData(note.id);
+    final existing = await storage.getData(note.id);
 
     if (existing != null) {
       throw Exception("A note with this id already exists");
@@ -73,7 +73,7 @@ class NoteService {
     if (note.content.trim().isEmpty) {
       throw ArgumentError('Note content cannot be empty');
     }
-    final existing = storage.getData(note.id);
+    final existing = await storage.getData(note.id);
 
     if (existing == null) {
       throw ArgumentError("Note not found");
