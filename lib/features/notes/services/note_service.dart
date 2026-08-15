@@ -42,8 +42,6 @@ class NoteService {
     }
 
     await storage.saveData(note.id, note);
-
-    print("NOTE SAVED : ${note.id}");
   }
 
   // Retrieve note securely using encryption and storage //
