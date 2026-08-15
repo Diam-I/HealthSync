@@ -13,20 +13,24 @@ class NoteService {
     if (!storage.isOpen) {
       throw Exception("Storage not initialized");
     }
-    final authenticated = await encryptionService.authenticate();
+    //final authenticated = await encryptionService.authenticate();
 
-    if (!authenticated) {
-      throw Exception("Authentication failed");
-    }
+    //if (!authenticated) {
+    //throw Exception("Authentication failed");
+    //}
   }
 
   // Add note securely using encryption and storage //
+
   Future<void> addNote(Note note) async {
-    await _checkSecurity();
+    if (!storage.isOpen) {
+      throw Exception("Storage not initialized");
+    }
 
     if (note.title.trim().isEmpty) {
       throw ArgumentError('Note title cannot be empty');
     }
+
     if (note.content.trim().isEmpty) {
       throw ArgumentError('Note content cannot be empty');
     }
@@ -36,7 +40,10 @@ class NoteService {
     if (existing != null) {
       throw Exception("A note with this id already exists");
     }
+
     await storage.saveData(note.id, note);
+
+    print("NOTE SAVED : ${note.id}");
   }
 
   // Retrieve note securely using encryption and storage //

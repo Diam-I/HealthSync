@@ -1,12 +1,22 @@
 import 'package:healthsync/enums/note_category.dart';
+import 'package:hive/hive.dart';
+part 'note.g.dart';
 
+@HiveType(typeId: 0)
 class Note {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String title;
+  @HiveField(2)
   final String content;
+  @HiveField(3)
   final DateTime createdAt;
+  @HiveField(4)
   final DateTime updatedAt;
+  @HiveField(5)
   final NoteCategory category;
+  @HiveField(6)
   final List<String> tags;
 
   const Note({
