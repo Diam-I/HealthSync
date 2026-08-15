@@ -31,13 +31,12 @@ class NoteService {
       throw ArgumentError('Note content cannot be empty');
     }
 
-    final existing = await storage.getData(note.id);
+    final existing = storage.getData(note.id);
 
     if (existing != null) {
       throw Exception("A note with this id already exists");
     }
     await storage.saveData(note.id, note);
-    print("Note ${note.id} saved");
   }
 
   // Retrieve note securely using encryption and storage //
@@ -46,7 +45,7 @@ class NoteService {
     if (id.trim().isEmpty) {
       throw ArgumentError('Note ID cannot be empty');
     } else {
-      return await storage.getData(id);
+      return storage.getData(id);
     }
   }
 
@@ -56,7 +55,7 @@ class NoteService {
     if (id.trim().isEmpty) {
       throw ArgumentError('Note ID cannot be empty');
     }
-    final existing = await storage.getData(id);
+    final existing = storage.getData(id);
     if (existing == null) {
       throw ArgumentError("Note not found");
     }
@@ -73,7 +72,7 @@ class NoteService {
     if (note.content.trim().isEmpty) {
       throw ArgumentError('Note content cannot be empty');
     }
-    final existing = await storage.getData(note.id);
+    final existing = storage.getData(note.id);
 
     if (existing == null) {
       throw ArgumentError("Note not found");

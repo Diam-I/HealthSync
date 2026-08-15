@@ -148,9 +148,41 @@ class _NotesPageState extends State<NotesPage> {
                                 ),
                               ],
                             ),
+                            trailing: IconButton(
+                              icon: const Icon(
+                                Icons.delete_outline,
+                                color: Colors.red,
+                              ),
+                              tooltip: "Supprimer",
+                              onPressed: () async {
+                                final confirm = await showDialog<bool>(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text("Supprimer la note ?"),
+                                    content: Text(
+                                      "Voulez-vous vraiment supprimer \"${note.title}\" ?",
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, false),
+                                        child: const Text("Annuler"),
+                                      ),
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, true),
+                                        child: const Text("Supprimer"),
+                                      ),
+                                    ],
+                                  ),
+                                );
 
-                            trailing: const Icon(Icons.arrow_forward_ios),
-
+                                if (confirm == true) {
+                                  await widget.noteService.deleteNote(note.id);
+                                  await _loadNotes();
+                                }
+                              },
+                            ),
                             onTap: () async {
                               final updatedNote = await Navigator.push<Note>(
                                 context,
@@ -159,6 +191,7 @@ class _NotesPageState extends State<NotesPage> {
                                       NoteDetailPage(note: note),
                                 ),
                               );
+
                               if (updatedNote != null) {
                                 await widget.noteService.updateNote(
                                   updatedNote,

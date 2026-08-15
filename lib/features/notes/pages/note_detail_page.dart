@@ -139,7 +139,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
               const SizedBox(height: 20),
 
               DropdownButtonFormField<NoteCategory>(
-                value: _selectedCategory,
+                initialValue: _selectedCategory,
                 decoration: const InputDecoration(
                   labelText: 'Category',
                   border: OutlineInputBorder(),
