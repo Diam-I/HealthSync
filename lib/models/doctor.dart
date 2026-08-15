@@ -1,7 +1,7 @@
 class Doctor {
   final String id;
   final String firstName;
-  final String LastName;
+  final String lastName;
   final String email;
   final String phoneNumber;
   final String address;
@@ -9,7 +9,7 @@ class Doctor {
   Doctor({
     required this.id,
     required this.firstName,
-    required this.LastName,
+    required this.lastName,
     required this.email,
     required this.phoneNumber,
     required this.address,
@@ -20,7 +20,7 @@ class Doctor {
   Doctor.fromJson(Map<String, dynamic> json)
     : id = json['id'],
       firstName = json['firstName'],
-      LastName = json['LastName'],
+      lastName = json['lastName'],
       email = json['email'],
       phoneNumber = json['phoneNumber'],
       address = json['address'],
@@ -30,7 +30,7 @@ class Doctor {
   Map<String, dynamic> toJson() => {
     'id': id,
     'firstName': firstName,
-    'LastName': LastName,
+    'lastName': lastName,
     'email': email,
     'phoneNumber': phoneNumber,
     'address': address,

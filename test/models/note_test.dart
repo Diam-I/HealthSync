@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:healthsync/enums/noteCategory.dart';
+import 'package:healthsync/enums/note_category.dart';
 import 'package:healthsync/models/note.dart';
 
 void main() {
@@ -13,7 +13,7 @@ void main() {
         content: 'Douleur intense.',
         createdAt: DateTime(2025, 1, 1),
         updatedAt: DateTime(2025, 1, 1),
-        category: NoteCategory.Symptome,
+        category: NoteCategory.symptome,
         tags: const ['cardio'],
       );
     });
@@ -25,7 +25,7 @@ void main() {
         expect(note.content, 'Douleur intense.');
         expect(note.createdAt, DateTime(2025, 1, 1));
         expect(note.updatedAt, DateTime(2025, 1, 1));
-        expect(note.category, NoteCategory.Symptome);
+        expect(note.category, NoteCategory.symptome);
         expect(note.tags, const ['cardio']);
       });
     });
@@ -39,7 +39,7 @@ void main() {
         expect(json['content'], 'Douleur intense.');
         expect(json['createdAt'], note.createdAt.toIso8601String());
         expect(json['updatedAt'], note.updatedAt.toIso8601String());
-        expect(json['category'], 'Symptome');
+        expect(json['category'], 'symptome');
         expect(json['tags'], ['cardio']);
       });
 
@@ -50,7 +50,7 @@ void main() {
           content: 'Note sans tags.',
           createdAt: DateTime(2025, 1, 3),
           updatedAt: DateTime(2025, 1, 3),
-          category: NoteCategory.Personnel,
+          category: NoteCategory.personnel,
         );
 
         final json = noteWithoutTags.toJson();
@@ -65,7 +65,7 @@ void main() {
           content: '...',
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
-          category: NoteCategory.Consultation,
+          category: NoteCategory.consultation,
           tags: const ['cardio', 'urgence', 'scanner'],
         );
 
@@ -73,9 +73,9 @@ void main() {
       });
 
       test('should serialize Consultation category', () {
-        final consultation = note.copyWith(category: NoteCategory.Consultation);
+        final consultation = note.copyWith(category: NoteCategory.consultation);
 
-        expect(consultation.toJson()['category'], 'Consultation');
+        expect(consultation.toJson()['category'], 'consultation');
       });
 
       test('should serialize many tags', () {
@@ -109,7 +109,7 @@ void main() {
           'content': '...',
           'createdAt': DateTime(2025, 1, 3).toIso8601String(),
           'updatedAt': DateTime(2025, 1, 3).toIso8601String(),
-          'category': 'Personnel',
+          'category': 'personnel',
         };
 
         final rebuilt = Note.fromJson(json);
@@ -156,7 +156,7 @@ void main() {
           title: 'Douleur modérée',
           content: 'Douleur moins grave.',
           updatedAt: DateTime(2025, 1, 2),
-          category: NoteCategory.Consultation,
+          category: NoteCategory.consultation,
           tags: const ['updated', 'note'],
         );
 
@@ -165,7 +165,7 @@ void main() {
         expect(updated.content, 'Douleur moins grave.');
         expect(updated.createdAt, note.createdAt);
         expect(updated.updatedAt, DateTime(2025, 1, 2));
-        expect(updated.category, NoteCategory.Consultation);
+        expect(updated.category, NoteCategory.consultation);
         expect(updated.tags, const ['updated', 'note']);
       });
 

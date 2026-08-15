@@ -1,12 +1,22 @@
-import 'package:healthsync/enums/noteCategory.dart';
+import 'package:healthsync/enums/note_category.dart';
+import 'package:hive/hive.dart';
+part 'note.g.dart';
 
+@HiveType(typeId: 0)
 class Note {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String title;
+  @HiveField(2)
   final String content;
+  @HiveField(3)
   final DateTime createdAt;
+  @HiveField(4)
   final DateTime updatedAt;
+  @HiveField(5)
   final NoteCategory category;
+  @HiveField(6)
   final List<String> tags;
 
   const Note({
@@ -40,12 +50,18 @@ class Note {
 
   // Convert JSON to Note object //
   factory Note.fromJson(Map<String, dynamic> json) {
-    if (json['id'] == null || json['id'] == '' || 
-        json['title'] == null || json['title'] == '' ||
-        json['content'] == null || json['content'] == '' ||
-        json['createdAt'] == null || json['createdAt'] == '' ||
-        json['updatedAt'] == null || json['updatedAt'] == '' ||
-        json['category'] == null || json['category'] == '') {
+    if (json['id'] == null ||
+        json['id'] == '' ||
+        json['title'] == null ||
+        json['title'] == '' ||
+        json['content'] == null ||
+        json['content'] == '' ||
+        json['createdAt'] == null ||
+        json['createdAt'] == '' ||
+        json['updatedAt'] == null ||
+        json['updatedAt'] == '' ||
+        json['category'] == null ||
+        json['category'] == '') {
       throw ArgumentError('Missing required fields in JSON');
     }
     return Note(
