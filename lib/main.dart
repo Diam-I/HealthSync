@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:healthsync/features/notes/pages/notes_page.dart';
 import 'package:healthsync/features/notes/services/note_service.dart';
 import 'package:healthsync/core/security/encryption_service.dart';
 import 'package:healthsync/core/storage/hive_storage_services.dart';
+import 'package:healthsync/features/patient/pages/patient_page.dart';
 import 'package:healthsync/models/note.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:healthsync/enums/note_category.dart';
+import 'package:healthsync/features/patient/services/patient_service.dart';
+import 'package:healthsync/models/patient.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,35 +17,54 @@ Future<void> main() async {
   Hive.registerAdapter(NoteAdapter());
   // Register the NoteCategoryAdapter for Hive //
   Hive.registerAdapter(NoteCategoryAdapter());
+  // Register the PatientAdapter for Hive //
+  Hive.registerAdapter(PatientAdapter());
   // Initialize Hive for Flutter //
   await Hive.initFlutter();
   // Initialize the encryption service and storage service //
   final encryptionService = EncryptionService();
-
   final encryptionKey = await encryptionService.generateAESKey();
-  final storage = HiveStorageServices<Note>('notes');
-  await storage.init(encryptionKey);
+  final storageNotes = HiveStorageServices<Note>('notes');
+  final storagePatient = HiveStorageServices<Patient>('patients');
+  await storageNotes.init(encryptionKey);
+  await storagePatient.init(encryptionKey);
 
   // Initialize the note service with encryption and storage //
   final noteService = NoteService(
     encryptionService: encryptionService,
-    storage: storage,
+    storage: storageNotes,
+  );
+  // Initialize the patient service //
+  final patientService = PatientService(
+    storage: storagePatient,
+    encryptionService: encryptionService,
   );
 
   // Run the app with the note service //
-  runApp(HealthSyncApp(noteService: noteService));
+  runApp(
+    HealthSyncApp(noteService: noteService, patientService: patientService),
+  );
 }
 
 class HealthSyncApp extends StatelessWidget {
   final NoteService noteService;
-  const HealthSyncApp({super.key, required this.noteService});
+  final PatientService patientService;
+  const HealthSyncApp({
+    super.key,
+    required this.noteService,
+    required this.patientService,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'HealthSync',
-      home: NotesPage(noteService: noteService),
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: PatientPage(
+        patientService: patientService,
+        noteService: noteService,
+      ),
     );
   }
 }

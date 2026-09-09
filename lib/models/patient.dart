@@ -1,14 +1,29 @@
+import 'package:hive/hive.dart';
+part 'patient.g.dart';
+
+@HiveType(typeId: 2)
 class Patient {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String firstName;
+  @HiveField(2)
   final String lastName;
+  @HiveField(3)
   final String phone;
+  @HiveField(4)
   final String email;
+  @HiveField(5)
   final String address;
+  @HiveField(6)
   final String gender;
+  @HiveField(7)
   final String dateOfBirth;
-  final int height;
-  final int weight;
+  @HiveField(8)
+  final String height;
+  @HiveField(9)
+  final String weight;
+  @HiveField(10)
   final String bloodType;
 
   Patient({
