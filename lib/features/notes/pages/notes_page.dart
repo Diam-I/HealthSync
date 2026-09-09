@@ -3,10 +3,17 @@ import 'package:healthsync/enums/note_category.dart';
 import 'package:healthsync/models/note.dart';
 import 'package:healthsync/features/notes/pages/note_detail_page.dart';
 import 'package:healthsync/features/notes/services/note_service.dart';
+import 'package:healthsync/features/patient/pages/patient_page.dart';
+import 'package:healthsync/features/patient/services/patient_service.dart';
 
 class NotesPage extends StatefulWidget {
   final NoteService noteService;
-  const NotesPage({super.key, required this.noteService});
+  final PatientService patientService;
+  const NotesPage({
+    super.key,
+    required this.noteService,
+    required this.patientService,
+  });
 
   @override
   State<NotesPage> createState() => _NotesPageState();
@@ -68,7 +75,27 @@ class _NotesPageState extends State<NotesPage> {
         },
         child: const Icon(Icons.add),
       ),
-
+      // A bottom to go to the patient page //
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.note), label: 'Notes'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Patient'),
+        ],
+        currentIndex: 0,
+        onTap: (index) {
+          if (index == 1) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PatientPage(
+                  patientService: widget.patientService,
+                  noteService: widget.noteService,
+                ),
+              ),
+            );
+          }
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
 
