@@ -1,47 +1,51 @@
-import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:typed_data';
+import 'package:hive/hive.dart';
 
 class HiveStorageServices<T> {
   final String boxName;
-  late Box<T> _box;
+  Box<T>? _box;
+
   HiveStorageServices(this.boxName);
 
-  Future<void> init(Uint8List encryptionKey) async {
-    // Initialize the Hive box with encryption //
+  Future<void> init(Uint8List cipherKey) async {
     _box = await Hive.openBox<T>(
       boxName,
-      encryptionCipher: HiveAesCipher(encryptionKey),
+      encryptionCipher: HiveAesCipher(cipherKey),
     );
   }
 
-  Future<void> saveData(String key, T value) async {
-    // Save data to the Hive box //
-    await _box.put(key, value);
+  bool get isOpen => _box != null && _box!.isOpen;
+
+  Box<T> get _safeBox {
+    if (_box == null || !_box!.isOpen) {
+      throw Exception('Storage is not initialized or is closed');
+    }
+    return _box!;
   }
 
-  T? getData(dynamic key) {
-    // Retrieve data from the Hive box //
-    return _box.get(key);
+  Future<void> saveData(String key, T data) async {
+    await _safeBox.put(key, data);
   }
 
-  Future<void> deleteData(dynamic key) async {
-    // Delete data from the Hive box //
-    await _box.delete(key);
-  }
-
-  Future<void> clearBox() async {
-    // Clear all data from the Hive box //
-    await _box.clear();
-  }
-
-  Future<void> closeBox() async {
-    // Close the Hive box //
-    await _box.close();
+  Future<T?> getData(String key) async {
+    return _safeBox.get(key);
   }
 
   Future<List<T>> getAllData() async {
-    return _box.values.toList();
+    return _safeBox.values.toList();
   }
 
-  bool get isOpen => _box.isOpen;
+  Future<void> deleteData(String key) async {
+    await _safeBox.delete(key);
+  }
+
+  Future<void> clearBox() async {
+    await _safeBox.clear();
+  }
+
+  Future<void> closeBox() async {
+    if (isOpen) {
+      await _safeBox.close();
+    }
+  }
 }
