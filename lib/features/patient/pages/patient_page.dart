@@ -350,10 +350,8 @@ class PatientPage extends StatelessWidget {
                           id: patient.id,
                           firstName: firstNameController.text.trim(),
                           lastName: lastNameController.text.trim(),
-                          gender:
-                              patient.gender, // Valeurs non éditées conservées
-                          dateOfBirth: patient.dateOfBirth,
-
+                          gender: genderController.text.trim(),
+                          dateOfBirth: dateOfBirthController.text.trim(),
                           address: addressController.text.trim(),
                           phone: phoneController.text.trim(),
                           email: emailController.text.trim(),
