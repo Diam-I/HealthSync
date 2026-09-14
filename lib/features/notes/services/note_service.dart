@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:healthsync/core/security/encryption_service.dart';
 import 'package:healthsync/core/storage/hive_storage_services.dart';
 import 'package:healthsync/models/note.dart';
@@ -6,6 +8,7 @@ import 'package:healthsync/enums/note_category.dart';
 class NoteService {
   final EncryptionService encryptionService;
   final HiveStorageServices<Note> storage;
+  late Directory tempDir;
 
   NoteService({required this.encryptionService, required this.storage});
 
@@ -35,12 +38,10 @@ class NoteService {
       throw ArgumentError('Note content cannot be empty');
     }
 
-    final existing = storage.getData(note.id);
-
+    final existing = await storage.getData(note.id);
     if (existing != null) {
       throw Exception("A note with this id already exists");
     }
-
     await storage.saveData(note.id, note);
   }
 
@@ -50,7 +51,7 @@ class NoteService {
     if (id.trim().isEmpty) {
       throw ArgumentError('Note ID cannot be empty');
     } else {
-      return storage.getData(id);
+      return await storage.getData(id);
     }
   }
 
@@ -60,7 +61,7 @@ class NoteService {
     if (id.trim().isEmpty) {
       throw ArgumentError('Note ID cannot be empty');
     }
-    final existing = storage.getData(id);
+    final existing = await storage.getData(id);
     if (existing == null) {
       throw ArgumentError("Note not found");
     }
@@ -77,7 +78,7 @@ class NoteService {
     if (note.content.trim().isEmpty) {
       throw ArgumentError('Note content cannot be empty');
     }
-    final existing = storage.getData(note.id);
+    final existing = await storage.getData(note.id);
 
     if (existing == null) {
       throw ArgumentError("Note not found");
