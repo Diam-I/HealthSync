@@ -8,26 +8,29 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:healthsync/enums/note_category.dart';
 import 'package:healthsync/features/patient/services/patient_service.dart';
 import 'package:healthsync/models/patient.dart';
+import 'package:healthsync/models/document.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Initialize the Hive database //
   await Hive.initFlutter();
+  // Register the DocumentAdapter for Hive //
+  //Hive.registerAdapter(DocumentAdapter());
   // Register the NoteAdapter for Hive //
   Hive.registerAdapter(NoteAdapter());
   // Register the NoteCategoryAdapter for Hive //
   Hive.registerAdapter(NoteCategoryAdapter());
   // Register the PatientAdapter for Hive //
   Hive.registerAdapter(PatientAdapter());
-  // Initialize Hive for Flutter //
-  await Hive.initFlutter();
   // Initialize the encryption service and storage service //
   final encryptionService = EncryptionService();
   final encryptionKey = await encryptionService.generateAESKey();
   final storageNotes = HiveStorageServices<Note>('notes');
   final storagePatient = HiveStorageServices<Patient>('patients');
+  final storageDocuments = HiveStorageServices<Document>('documents');
   await storageNotes.init(encryptionKey);
   await storagePatient.init(encryptionKey);
+  await storageDocuments.init(encryptionKey);
 
   // Initialize the note service with encryption and storage //
   final noteService = NoteService(
@@ -38,11 +41,6 @@ Future<void> main() async {
   final patientService = PatientService(
     storage: storagePatient,
     encryptionService: encryptionService,
-  );
-
-  // Run the app with the note service //
-  runApp(
-    HealthSyncApp(noteService: noteService, patientService: patientService),
   );
 }
 
